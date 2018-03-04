@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="/template/scheduleTemplate.xhtml">
+
+		<ui:define name="content">
+			<f:metadata>
+				<f:viewParam name="sid" value="#{memoEditManagedBean.sid}" />
+				<f:viewAction action="#{memoEditManagedBean.edit()}" />
+			</f:metadata>
+			<h1>データ更新</h1>
+			<h:form id="form">
+				<div class="entry">
+					<div>
+						<label>sid</label>
+						<div>
+							<p:inputText id="sid" value="#{memoEditManagedBean.schedule.sid}" size="60"/>
+						
+						</div>
+					
+					</div>
+					
+					<div>
+						<label>タイトル</label>
+						<div>
+							<p:inputText id="title" value="#{memoEditManagedBean.schedule.title}" size="60">
+								<f:ajax event="blur" render="titleError"/>
+							</p:inputText>
+							<h:message for="title" id="titleError" errorClass="error"/>
+						</div>
+					</div>
+					<div>
+						<label>更新日</label>
+						<div>
+							<p:inputText id="sdate" value="#{memoEditManagedBean.schedule.sdate}" size="60">
+								<f:convertDateTime pattern="yyyy/MM/dd"/>
+								<f:ajax event="blur" render="sdateError"/>
+							
+							</p:inputText>
+							<h:message for="sdate" id="sdateError" errorClass="error"/>
+						
+						</div>
+					
+					
+					</div>
+					
+					<div>
+						<label>更新時間</label>
+						<div>
+							<p:inputText id="stime" value="#{memoEditManagedBean.schedule.stime}" size="60">
+								<f:convertDateTime type="time" timeStyle="medium"/>
+								<f:ajax event="blur" render="stimeError"/>
+							</p:inputText>
+							<h:message for="stime" id="stimeError" errorClass="error"/>
+						</div>
+					
+					
+					</div>
+					<div>
+						<label>メモ・予定</label>
+						<div>
+						<h:inputTextarea id="memo" value="#{memoEditManagedBean.schedule.memo}" cols="40" rows="30">
+							<f:ajax event="blur" render="memoError"/>
+						
+						</h:inputTextarea>
+						<h:message for="memo" id="memoError" errorClass="error"/>
+						</div>
+					</div>
+					<p:commandButton actionListener="#{memoEditManagedBean.updateSchedule()}" action="/index?faces-redirect=true" value="更新">
+						
+					</p:commandButton>
+					
+				
+				</div>			
+			
+			
+			</h:form>
+		</ui:define>
+
+
+
+	</ui:composition>
+
+
+
+
+
+</h:body>
+
+
+
+
+</html>

@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+      
+<h:head>
+
+	<h:outputStylesheet library="css" name="style.css" />
+	<!-- ｊsfが提供するJavaScriptをロードしておくJavaEE7 151P参照 -->
+	<h:outputScript name="jsf.js" library="javax.faces" />
+	<h:outputScript name="applications.js" library="js" />
+
+	<title>スケジュール情報</title>
+	<script type="text/javascript">
+        //
+        PrimeFaces.locales['ja'] = {
+            closeText : '閉じる',
+            prevText : '前',
+            nextText : '次',
+            monthNames : [ '１月', '２月', '３月', '４月', '５月', '６月', '７月', '８月',
+                    '９月', '１０月', '１１月', '１２月' ],
+            monthNamesShort : [ '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月',
+                    '9月', '10月', '11月', '12月' ],
+            dayNames : [ '日曜', '月曜', '火曜', '水曜', '木曜', '金曜', '土曜' ],
+            dayNamesShort : [ '日', '月', '火', '水', '木', '金', '土' ],
+            dayNamesMin : [ '日', '月', '火', '水', '木', '金', '土' ],
+            weekHeader : '週',
+            firstDay : 1,
+            isRTL : false,
+            showMonthAfterYear : false,
+            yearSuffix : '',
+            timeOnlyTitle : '時間のみ',
+            timeText : '時間',
+            hourText : '時',
+            minuteText : '分',
+            secondText : '秒',
+            currentText : '今日',
+            ampm : false,
+            month : '月',
+            week : '週',
+            day : '日',
+            allDayText : '全日',
+           
+        };
+
+        function focustest(){
+			document.form.title.focus();
+        }
+        //
+    </script>
+</h:head>
+<h:body>
+	<div id="top">
+		<ui:insert name="top">
+			<ui:include src="top.xhtml" />
+		</ui:insert>
+	</div>
+	<div id="menu">
+		<ui:insert name="menu">
+			<ui:include src="menu.xhtml" />
+		</ui:insert>
+	</div>
+	<div id="content">
+		<ui:insert name="content"></ui:insert>
+	</div>
+</h:body>
+</html>

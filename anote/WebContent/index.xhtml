@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/template/scheduleTemplate.xhtml">
+		<!-- 初期表示時に一覧表するため、DBより全データを取得 -->
+
+		<ui:define name="content">
+
+			<f:metadata>
+				<f:viewAction action="#{memoShowAllManagedBean.findList()}"
+					onPostback="true" />
+			</f:metadata>
+
+			<h1>スケジュール一覧</h1>
+			<!--各コンポーネントに紐ずくエラーではないエラーを出力する -->
+			<h:messages globalOnly="true" infoStyle="color:RED" />
+
+			<h:form prependId="false">
+				<!-- action属性で/facesはいらない。自動でつけられる-->
+				<p:commandButton value="新規登録"
+					action="/schedule/creatememo?faces-redirect=true" />
+
+				<table class="table">
+
+					<tr>
+						<th width="120">編集/削除</th>
+						<th>sid</th>
+						<th>タイトル</th>
+						<th>更新日</th>
+						<th>更新時間</th>
+						<th>スケジュールメモ</th>
+					</tr>
+
+					<ui:repeat var="row" value="#{memoShowAllManagedBean.scheduleList}">
+						<tr>
+							<td><p:link outcome="/schedule/memoEdit" value="編集">
+									<f:param name="sid" value="#{row.sid}" />
+								</p:link> | <p:commandLink
+									actionListener="#{memoShowAllManagedBean.deleteSchedule(row)}" action="/index?faces-redirect=true"
+									value="削除" /></td>
+							<td><h:outputText value="#{row.sid}" /></td>
+							<td><h:outputText value="#{row.title}" /></td>
+							<td><h:outputText value="#{row.sdate}">
+									<f:convertDateTime pattern="yyyy年MM月dd日" />
+								</h:outputText></td>
+							<td><h:outputText value="#{row.stime}">
+									<f:convertDateTime type="time" timeStyle="medium" />
+								</h:outputText></td>
+							<td><h:outputText value="#{row.memo}" /></td>
+						</tr>
+
+					</ui:repeat>
+
+				</table>
+
+			</h:form>
+
+
+		</ui:define>
+
+
+	</ui:composition>
+
+
+</h:body>
+
+
+</html>

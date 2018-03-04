@@ -1,0 +1,105 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+      
+      <h:body>
+      
+      <ui:composition template="/template/scheduleTemplate.xhtml">
+      	<ui:define name="content">
+      		<h:form prependId="false">
+      			<table class="table">
+      				<tr>
+      					<th>タイトル</th>
+      					<td>
+      			
+      						<p:inputText id="title" value="#{memoCreateManagedBean.title}" size="60" label="タイトル" required="true" >
+      							<f:validateLength minimum="1" maximum="30"/>
+      							<p:ajax event="keydown" update="titleError"></p:ajax>
+      							<f:ajax event="blur" render="titleError" />
+      						</p:inputText>
+      						<p:focus for="title"/>
+      						<h:message for="title" id="titleError" errorClass="error"/>
+      	
+      					
+      					</td>
+      				
+      				</tr>
+      				
+      				<tr>
+      					<th>更新日</th>
+      					<td>
+      				<!-- 
+      						<p:inputText id="sdate" value="#{memoCreateManagedBean.sdate}" size="60" label="更新日" >
+      							<f:ajax event="blur" render="sdateError"/>
+      							<f:convertDateTime pattern="yyyy/MM/dd"/>
+      						</p:inputText>
+      					 -->
+      						 	
+      						 <p:calendar id="sdate" value="#{memoCreateManagedBean.sdate}" label="更新日" pattern="yyyy/MM/dd" locale="ja" showOn="button" required="true" requiredMessage="日付は必須です " >
+      						 	<f:convertDateTime pattern="yyyy/MM/dd"/>
+      						 	<f:ajax event="blur" render="sdateError" />
+      						 	<p:ajax event="dateSelect" update="sdateError"/>
+      						 </p:calendar>
+      						 	
+      						<h:message  for="sdate" id="sdateError" errorClass="error" />
+      					</td>
+      				
+      				
+      				</tr>
+      				<tr>
+      					<th>更新時間</th>
+      					<td>
+      					
+      					
+      					<!-- 
+      						<p:inputText id="stime" value="#{memoCreateManagedBean.stime}" size="60" label="更新時間">
+      							<f:convertDateTime type="time" timeStyle="medium"/>
+      						</p:inputText>
+      						 -->
+      						<p:calendar id="stime" value="#{memoCreateManagedBean.stime}" size="60" label="更新時間" pattern="HH:mm:ss" timeOnly="true">
+      							<f:convertDateTime type="time" timeStyle="medium"/>
+      							<f:ajax event="blur" render="stimeError"/>
+      							<p:ajax event="dateSelect" update="stimeError"/>
+      						</p:calendar>
+      						
+      						<h:message for="stime" id="stimeError" errorClass="error"/>
+      					</td>
+      				
+      				</tr>
+      				<tr>
+      					<th>メモ欄・予定</th>
+      					<td>
+      						<p:inputTextarea id="memo" value="#{memoCreateManagedBean.memo}" color="40" rows="20" label="メモ・予定">
+      							<f:validateLength maximum="255" minimum="1"/>
+      							<f:ajax event="blur" render="memoError"/>
+      						</p:inputTextarea>
+      						<h:message for="memo" id="memoError" errorClass="error"/>
+      					
+      					</td>
+      				</tr>
+      				<tr>
+      					<td colspan="2">
+      						<p:commandButton actionListener="#{memoCreateManagedBean.createSchecdule()}" action="/index?faces-redirect=true" value="登録"/>
+      					</td>
+      				</tr>
+      				
+      			
+      			</table>
+      		
+      		</h:form>
+      	
+      	
+      	
+      	</ui:define>
+      
+      
+      
+      
+      </ui:composition>
+      
+      </h:body>
+      
+      </html>
