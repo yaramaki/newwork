@@ -9,8 +9,6 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org
 	 <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
 
-
-
     </properties>
 	</persistence-unit>
 </persistence>
