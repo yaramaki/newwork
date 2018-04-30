@@ -4,6 +4,43 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
 	version="2.2">
 
+	<navigation-rule>
+		<from-view-id>/index.xhtml</from-view-id>
+		
+		<navigation-case>
+			<from-outcome>failer</from-outcome>
+			<to-view-id>/index.xhtml?faces-redirect=true</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/editUser.xhtml?faces-redirect=true</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/list.xhtml</from-view-id>
+		
+		<navigation-case>
+			<from-outcome>failer</from-outcome>
+			<to-view-id>/index.xhtml?faces-redirect=true</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/editUser.xhtml?faces-redirect=true</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/changeTheme.xhtml</from-view-id>
+		
+		<navigation-case>
+			<from-outcome>failer</from-outcome>
+			<to-view-id>/index.xhtml?faces-redirect=true</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/editUser.xhtml?faces-redirect=true</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
 	<application>
 		<locale-config>
 			<default-locale>ja</default-locale>
@@ -16,5 +53,7 @@
 		</resource-bundle>
 		<!-- JSFのタグ <f:validateLength >の標準エラーメッセージ -->
 		<message-bundle>messages.Messages</message-bundle>
+
+
 	</application>
 </faces-config>

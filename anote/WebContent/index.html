@@ -3,14 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-1.6.4.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+function numericZentohan(data){
+    data += '';
+    var table = {
+        "０":0,
+        "１":1,
+        "２":2,
+        "３":3,
+        "４":4,
+        "５":5,
+        "６":6,
+        "７":7,
+        "８":8,
+        "９":9
+    };
+
+    while(data.match(/[０-９]/)){
+        for(n in table){
+            data = data.replace(n, table[n]);
+        }
+    }
+
+    return data;
+}
+/***********  JQuery で 実行 **********************/
+$(function(){
+	  $('#tel').change(function(){
+	    $('#tel').val(numericZentohan($('#tel').val()));
+	  });
+});
+/***************************************************/
+
+
+/*** 「JQuery で 実行」は、以下でもできます ただし、inputタグにonblur="henkan()を追記する****
+//jquery-1.6.4.min.jsが利用できないときのため
+function henkan(){
+	document.getElementById("tel").value=numericZentohan(document.getElementById("tel").value);
+}
+*********************************************************************************************/
+</script>
 </head>
 <body>
-HELLO JavaEE7
-<br/>
-MemoEditManagedBean created<br/>
-message_ja作成<br/>
-Message_ja作成<br/>
-faces-config.xml登録<br/>
-template
+	<script type="text/javascript">
+
+</script>
+	<h1>Zenkaku To Hankaku</h1>
+	<form id="form1" method="get" action="">
+
+		<input id="tel" type="text" style="width: 350px;" value=""/>
+		
+		
+		<br /> 
+		<input id="tel2" type="text" style="width: 350px;" value=""  />
+
+	</form>
+
+
+
 </body>
 </html>

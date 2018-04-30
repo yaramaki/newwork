@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head />
+<body>
+	<ui:composition>
+
+		<h2>ユーザ編集</h2>
+		<!-- Enterキーで編集を確定するScript closestは先祖をたどる -->
+		<h:outputScript>
+
+		$(document).on("keydown",".ui-cell-editor-input input",function(event){
+			if(event.keyCode==13){
+				$(this).closest("tr").find(".ui-row-editor .ui-icon-check").click();
+			}
+		
+		});
+
+		</h:outputScript>
+		<p:growl id="growl" showDetail="true" autoUpdate="true"/>
+		<h:form id="addFormUser">
+		
+			<p:panelGrid columns="2">
+				<p:outputLabel value="アカウント : "/>
+				<p:inputText value="#{editUserView.account}" id="account" required="true" requiredMessage="アカウントは必須です"/>
+			
+			<p:outputLabel value="名前:" />
+				<p:inputText value="#{editUserView.name}" id="name" required="true"
+					requiredMessage="名前は必須です。" />
+			
+			<p:outputLabel value="パスワード:" />
+				<p:inputText value="#{editUserView.password}" id="password" />
+			
+			<p:outputLabel value="E-mail : "/>
+			<p:inputText id="email" value="#{editUserView.email}"/>
+			
+			<p:outputLabel value="管理者権限 : "/>
+			<p:selectBooleanCheckbox id="boolAdmin" value="#{editUserView.boolAdmin}" style="align:center"/>
+			
+			</p:panelGrid>
+			
+			<p:messages/>
+			
+			<p:commandButton action="#{editUserView.addUser}" value="ユーザを追加" ajax="true" update=":userListForm:userList"/>
+		
+		</h:form>
+		<br/>
+		
+		<p:separator/>
+		
+		<h2>ユーザー一覧</h2>
+		<!-- エンターキーでサブミットされないようにする -->
+		<h:form id="userListForm" onkeypress="return evevt.keyCode!=13;">
+		
+		<!-- p:commandButtonでダイアログ表示は ajax=true にしなければならない 画面遷移の場合は、ajax="false" にする -->
+		
+		<p:commandButton id="removeButton" value="選択したユーザーを削除" ajax="true" disabled="#{false==editUserView.isSelected}"
+				action="#{editUserView.removeUser}" update=":userListForm">
+			
+			<!-- 確認ダイアログを表示する -->
+			<p:confirm header="確認" message="選択したユーザーを削除しますか?" icon="ui-icon-info"/>
+						
+			<p:confirmDialog global="true" showEffect="explode" hideEffect="slide">
+				<p:commandButton value="はい" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				
+				<p:commandButton value="いいえ" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+			</p:confirmDialog>
+		</p:commandButton>
+		<br />
+		<br />
+		
+		<!-- selectionは、チェックで選択されたUtblのリスト -->
+		<p:dataTable id="userList" paginator="true" editable="true" paginatorPosition="top" rows="10"
+			rowsPerPageTemplate="5,10,15,30,50" sortMode="multiple" 
+			 value="#{editUserView.iduserListDataModel}" var="user" selection="#{editUserView.selectedUsers}" 
+			 rowKey="#{user.id}">
+		
+			<!-- userlist.xml p:ajaxタグで、チェックボックスのイベントハンドラを呼び出すよう指定 -->
+			<p:ajax event="rowSelect" listener="#{editUserView.handleSelect}" update=":userListForm:removeButton"/>
+		
+			<p:ajax event="rowUnselect" listener="#{editUserView.handleSelect}" update=":userListForm:removeButton" />
+			
+			<p:ajax event="rowSelectCheckbox" listener="#{editUserView.handleSelect}" update=":userListForm:removeButton" />
+			
+			<p:ajax event="rowUnselectCheckbox" listener="#{editUserView.handleUnselect}" update=":userListForm:removeButton" />
+			
+			<p:ajax event="toggleSelect" listener="#{editUserView.handleToggleSelect}" update=":userListForm:removeButton" />
+			
+			<!-- グリッド編集 -->
+			<p:ajax event="rowEdit" listener="#{editUserView.onRowEdit}" update=":growl"/>
+			
+			<p:ajax event="rowEditCancel" listener="#{editUserView.onRowEditCancel}" update=":growl"/>
+			
+			<p:ajax event="contextMenu" update=":userListForm:removeButton" />
+			
+			
+			<!-- データ表示テーブル -->
+			
+			<p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+			
+			<!-- 
+				●stickyHeader="true"
+				画面スクロールに付随してテーブルのヘッダーが付いてきます
+				
+				
+				●sortMode="multiple"
+				Ctrlキーを押しながらカラムを選択すると複合でソート
+				
+				●セルの編集を有効にする
+				１．<p:datatable>タグの editable="true" を設定する。
+				２．<p:datatable>のタグ内に、<p:ajax>タグで event="rowEdit", event="rowEditCancel"のイベントを追加する。 
+				３．各カラムに対して、<p:cellEditor>タグを定義する。
+				４．<p:cellEditor>タグ内で、<f:facet name="output">, <f:facet name="input">で編集時、参照時のコントロールを定義する。
+				５．鉛筆マークのアイコンを出すため、<p:rowEditor/>とだけ書かれたカラムを定義する。
+			 -->
+			 <p:column headerText="アカウント" sortBy="#{user.account}" filterBy="#{user.account}" filterMatchMode="contains">
+			 	<p:cellEditor>
+			 		<f:facet name="output"><p:outputLabel value="#{user.account}"/></f:facet>
+			 		<f:facet name="input"><p:inputText value="#{user.account}"/></f:facet>
+			 	</p:cellEditor>
+			 
+			 </p:column>
+			 
+			 <p:column headerText="名前" sortBy="#{user.name}" filterBy="#{user.name}" filterMatchMode="contains">
+			 	<p:cellEditor>
+			 		<f:facet name="output"><p:outputLabel value="#{user.name}"/></f:facet>
+			 		<f:facet name="input"><p:inputText value="#{user.name}"/> </f:facet>
+			 	</p:cellEditor>
+			 </p:column>
+			 
+			 <p:column headerText="E-Mail" sortBy="#{user.email}" filterBy="#{user.email}" filterMatchMode="contains">
+			 	<p:cellEditor>
+			 		<f:facet name="output"><p:outputLabel value="#{user.email}"/></f:facet>
+			 		<f:facet name="input"><p:inputText value="#{user.email}"/></f:facet>
+			 	</p:cellEditor>
+			 </p:column>
+			 
+			 <p:column headerText="管理者権限" sortBy="#{user.boolAdmin}" filterBy="#{user.boolAdmin}" filterMatchMode="exact" style="text-align:center">
+			 	<p:cellEditor>
+			 		<f:facet name="output"><p:selectBooleanCheckbox value="#{user.boolAdmin}" disabled="true"/></f:facet>
+			 		<f:facet name="input"><p:selectBooleanCheckbox value="#{user.boolAdmin}"/> </f:facet>
+			 	</p:cellEditor>
+			 </p:column>
+			 
+			 <!-- 編集のえんぴつマーク -->
+			 <p:column style="width:32px">
+			 	<p:rowEditor/>
+			 </p:column>
+			 
+		</p:dataTable>
+		
+		<!-- パスワード編集 コンテキストメニュー -->
+		<p:contextMenu for="userList">
+			<p:menuitem value="パスワード編集" icon="ui-icon-pencil" update="dialog" oncomplete="PF('passwordDialog').show()">
+			
+				<f:setPropertyActionListener value="#{editUserView.selectedUsers[0].password}" target="#{editUserView.newPassword}" />
+			</p:menuitem>
+		
+		</p:contextMenu>
+		</h:form>
+		
+		<p:dialog id="dialog" header="パスワード編集" widgetVar="passwordDialog" modal="true" showEffect="fold"
+			hideEffect="explode" resizable="false" dynamic="true" >
+		<h:form id="dialogForm">
+			<p:outputPanel id="passwordEdit" style="text-align:center;">
+				<p:panelGrid columns="2">
+					<f:facet name="header">
+						<p:outputLabel value="#{editUserView.selectedUsers[0].name.concat('のパスワード編集')}"/>
+					
+					</f:facet>
+					<p:outputLabel value="パスワード"/>
+					
+					<p:password value="#{editUserView.newPassword}" redisplay="true"/>
+					
+					<p:outputLabel value="見えるパスワード"/>
+					<p:inputText value="#{editUserView.newPassword}"/>
+				</p:panelGrid>
+				<p:commandButton value="OK" icon="ui-icon-check" action="#{userEditView.updatePassword}"
+					oncomplete="PF('passwordDialog').hide()"></p:commandButton>
+				<p:commandButton value="キャンセル" icon="ui-icon-close" oncomplete="PF('passwordDialog').hide()"/>	
+			
+			
+			</p:outputPanel>		
+		
+		</h:form>
+		
+		
+		</p:dialog>
+	</ui:composition>
+</body>
+</html>
+
+
+
+
+
+
+
+

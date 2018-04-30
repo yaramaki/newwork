@@ -1,2 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<PROCESS model-entity="JSFProcess"/>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#index.xhtml" PATH="/index.xhtml"
+  SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#index.xhtml:0" NAME="item"
+   PATH="/index.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="failer::#index.xhtml?faces-redirect=true"
+    NAME="output" PATH="/index.xhtml?faces-redirect=true"
+    TARGET="rules:#index.xhtml?faces-redirect=true" TITLE="failer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success::#editUser.xhtml?faces-redirect=true" NAME="output1"
+    PATH="/editUser.xhtml?faces-redirect=true"
+    TARGET="rules:#editUser.xhtml?faces-redirect=true" TITLE="success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#index.xhtml?faces-redirect=true"
+  PATH="/index.xhtml?faces-redirect=true" SHAPE="256,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#editUser.xhtml?faces-redirect=true"
+  PATH="/editUser.xhtml?faces-redirect=true" SHAPE="256,177,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#list.xhtml" PATH="/list.xhtml"
+  SHAPE="32,161,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#list.xhtml:0" NAME="item" PATH="/list.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="failer::#index.xhtml?faces-redirect=true"
+    NAME="output" PATH="/index.xhtml?faces-redirect=true"
+    TARGET="rules:#index.xhtml?faces-redirect=true" TITLE="failer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success::#editUser.xhtml?faces-redirect=true" NAME="output1"
+    PATH="/editUser.xhtml?faces-redirect=true"
+    TARGET="rules:#editUser.xhtml?faces-redirect=true" TITLE="success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#changeTheme.xhtml" PATH="/changeTheme.xhtml"
+  SHAPE="32,305,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#changeTheme.xhtml:0" NAME="item"
+   PATH="/changeTheme.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="failer::#index.xhtml?faces-redirect=true"
+    NAME="output" PATH="/index.xhtml?faces-redirect=true"
+    TARGET="rules:#index.xhtml?faces-redirect=true" TITLE="failer" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success::#editUser.xhtml?faces-redirect=true" NAME="output1"
+    PATH="/editUser.xhtml?faces-redirect=true"
+    TARGET="rules:#editUser.xhtml?faces-redirect=true" TITLE="success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+</PROCESS>
