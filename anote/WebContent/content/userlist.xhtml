@@ -155,7 +155,7 @@
 		
 		<!-- パスワード編集 コンテキストメニュー -->
 		<p:contextMenu for="userList">
-			<p:menuitem value="パスワード編集" icon="ui-icon-pencil" update="dialog" oncomplete="PF('passwordDialog').show()">
+			<p:menuitem value="パスワード編集" icon="ui-icon-pencil" update=":dialog" oncomplete="PF('passwordDialog').show()">
 			
 				<f:setPropertyActionListener value="#{editUserView.selectedUsers[0].password}" target="#{editUserView.newPassword}" />
 			</p:menuitem>
